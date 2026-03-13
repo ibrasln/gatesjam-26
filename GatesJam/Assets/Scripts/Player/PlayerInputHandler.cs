@@ -12,14 +12,11 @@ namespace GatesJam.Player
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                Vector2 moveInput = context.ReadValue<Vector2>();
-                XInput = Mathf.RoundToInt(moveInput.x);
-                YInput = Mathf.RoundToInt(moveInput.y);
-                MovementInput = moveInput;
-                Debug.Log($"Move Input: {MovementInput}");
-            }
+            Vector2 moveInput = context.ReadValue<Vector2>();
+            XInput = Mathf.RoundToInt(moveInput.x);
+            YInput = Mathf.RoundToInt(moveInput.y);
+            MovementInput = moveInput;
+            Debug.Log($"Move Input: {MovementInput}");
         }
 
         public void OnJump(InputAction.CallbackContext context)

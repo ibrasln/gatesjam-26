@@ -7,5 +7,9 @@ namespace GatesJam.Player
     {
         public float MoveSpeed;
         public float JumpForce;
+        public float InAirMoveSpeed;
+
+        public LayerMask WhatIsGround;
+        public float GroundCheckRadius;
     }
 }
