@@ -25,7 +25,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Desync",
+                    "name": "Sync",
                     "type": "Button",
                     "id": "7c78316d-a99f-4aef-bce1-f6bb61ef75da",
                     "expectedControlType": "",
@@ -194,14 +194,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Desync",
+                    "action": "Sync",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "30003765-bc8b-4648-819d-e73e4d55673a",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/y",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -722,6 +722,96 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "CharacterSelection",
+            "id": "3ae6eaf1-99c3-4828-9b90-91606f57192b",
+            "actions": [
+                {
+                    "name": "SelectTop",
+                    "type": "Button",
+                    "id": "49d3145a-5348-4c53-a1e4-4452535e038d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectBottom",
+                    "type": "Button",
+                    "id": "76deffd2-54cb-496b-84e6-536d14ee8fbb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ConfirmSelection",
+                    "type": "Button",
+                    "id": "dee93ec0-802c-4dc2-9114-2251faaf47ec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0a2a503f-4aab-40a7-8f4b-59d80e0a6698",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SelectTop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f2fd19e-853c-482a-887d-05f969630fff",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SelectTop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "693292c3-98e7-4c5f-9025-08c1fb08996a",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ConfirmSelection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b184c638-cb60-4987-bd72-8189aee586cd",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SelectBottom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a47dbef-71e9-4bf0-b4fa-a1d6cfd81e69",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SelectBottom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

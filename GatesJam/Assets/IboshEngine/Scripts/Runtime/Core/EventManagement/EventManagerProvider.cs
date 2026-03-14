@@ -8,6 +8,7 @@ namespace IboshEngine.Runtime.Core.EventManagement
         public static readonly UIEventManager UI = new();
         public static readonly DataEventManager Data = new();
         public static readonly CameraEventManager Camera = new();
+        public static readonly GameplayEventManager Gameplay = new();
     }
 
     /// <summary>
@@ -25,6 +26,10 @@ namespace IboshEngine.Runtime.Core.EventManagement
     }
 
     public class CameraEventManager : BaseEventManager<CameraEvent>
+    {
+    }
+
+    public class GameplayEventManager : BaseEventManager<GameplayEvent>
     {
     }
 }

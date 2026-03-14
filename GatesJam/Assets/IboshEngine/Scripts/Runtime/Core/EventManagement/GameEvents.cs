@@ -23,4 +23,16 @@ namespace IboshEngine.Runtime.Core.EventManagement
         OnNoneCameraStarted,
         OnNoneCameraCompleted,
     }
+
+    /// <summary>
+    /// Enum defining different types of Gameplay events.
+    /// </summary>
+    public enum GameplayEvent
+    {
+        OnSyncStarted,
+        OnSyncEnded,
+        OnDesyncStarted,
+        OnDesyncEnded,
+        OnCharacterSelected,
+    }
 }

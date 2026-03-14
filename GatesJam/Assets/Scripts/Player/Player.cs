@@ -1,10 +1,12 @@
 using UnityEngine;
 using IboshEngine.Runtime.Systems.StateMachine;
+using IboshEngine.Runtime.Core.EventManagement;
 
 namespace GatesJam.Player
 {
     public class Player : MonoBehaviour
     {
+        public int ID;
         public PlayerData Data;
         [SerializeField] private Transform groundCheckTransform;
 
@@ -19,8 +21,12 @@ namespace GatesJam.Player
         public PlayerMoveState MoveState {get; private set; }
         public PlayerJumpState JumpState {get; private set; }
         public PlayerInAirState InAirState {get; private set; }
+        public PlayerSyncState SyncState {get; private set; }
+        public PlayerWaitForDesyncState WaitForDesyncState {get; private set; }
+        public PlayerUnusableState UnusableState {get; private set; }
 
         #region Built-In
+
         private void Awake()
         {
             Anim = GetComponent<Animator>();
@@ -31,6 +37,19 @@ namespace GatesJam.Player
             MoveState = new PlayerMoveState(this, StateMachine, Data, "move");
             JumpState = new PlayerJumpState(this, StateMachine, Data, "inAir");
             InAirState = new PlayerInAirState(this, StateMachine, Data, "inAir");
+            SyncState = new PlayerSyncState(this, StateMachine, Data, "sync");
+            WaitForDesyncState = new PlayerWaitForDesyncState(this, StateMachine, Data, "idle");
+            UnusableState = new PlayerUnusableState(this, StateMachine, Data, "idle");
+        }
+
+        private void OnEnable()
+        {
+            SubscribeToEvents();
+        }
+        
+        private void OnDisable()
+        {
+            UnsubscribeFromEvents();
         }
 
         private void Start() 
@@ -40,7 +59,6 @@ namespace GatesJam.Player
 
         private void Update()
         {
-            Debug.Log(StateMachine.CurrentState.GetType().Name);
             StateMachine.CurrentState.LogicUpdate();
         }
 
@@ -52,6 +70,51 @@ namespace GatesJam.Player
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(groundCheckTransform.position, Data.GroundCheckRadius);
+        }
+
+        #endregion
+
+        #region Event Subscription
+
+        private void SubscribeToEvents()
+        {
+            EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnSyncStarted, HandleOnSyncStarted);
+            EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnSyncEnded, HandleOnSyncEnded);
+            EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
+            EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
+        }
+
+        private void UnsubscribeFromEvents()
+        {
+            EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnSyncStarted, HandleOnSyncStarted);
+            EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnSyncEnded, HandleOnSyncEnded);
+            EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
+            EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
+        }
+
+        #endregion
+
+        #region Event Handling
+
+        private void HandleOnSyncStarted()
+        {
+            StateMachine.ChangeState(UnusableState);
+        }
+
+        private void HandleOnSyncEnded()
+        {
+            StateMachine.ChangeState(IdleState);
+        }
+
+        private void HandleOnDesyncStarted()
+        {
+            StateMachine.ChangeState(UnusableState);
+        }
+        
+        private void HandleOnDesyncEnded(int playerID)
+        {
+            if (playerID == ID) StateMachine.ChangeState(IdleState);
+            else StateMachine.ChangeState(UnusableState);
         }
 
         #endregion
