@@ -49,7 +49,6 @@ namespace GatesJam.Sync
 
         private void HandleOnDesyncStarted()
         {
-            Debug.Log("Desync Started");
             PlayerInputHandler.Instance.EnterCharacterSelectionActionMap();
         }
 
@@ -60,13 +59,11 @@ namespace GatesJam.Sync
         public void SelectTop()
         {
             SelectedPlayer = players[0];
-            Debug.Log("Selected Top Player");
         }
         
         public void SelectBottom()
         {
             SelectedPlayer = players[1];
-            Debug.Log("Selected Bottom Player");
         }
 
         public void ConfirmSelection()
