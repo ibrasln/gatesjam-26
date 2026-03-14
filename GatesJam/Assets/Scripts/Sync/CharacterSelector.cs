@@ -52,6 +52,7 @@ namespace GatesJam.Sync
         {
             await UniTask.Delay(1250);
             PlayerInputHandler.Instance.EnterCharacterSelectionActionMap();
+            SelectTop();
         }
 
         #endregion
