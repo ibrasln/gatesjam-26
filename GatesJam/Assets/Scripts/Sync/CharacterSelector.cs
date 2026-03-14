@@ -2,6 +2,7 @@ using GatesJam.Player;
 using IboshEngine.Runtime.Core.EventManagement;
 using IboshEngine.Runtime.Utilities.Singleton;
 using Sirenix.OdinInspector;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,8 +48,9 @@ namespace GatesJam.Sync
 
         #region Event Handling
 
-        private void HandleOnDesyncStarted()
+        private async void HandleOnDesyncStarted()
         {
+            await UniTask.Delay(1250);
             PlayerInputHandler.Instance.EnterCharacterSelectionActionMap();
         }
 
@@ -59,16 +61,18 @@ namespace GatesJam.Sync
         public void SelectTop()
         {
             SelectedPlayer = players[0];
+            EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnCharacterSelectionUpdated, SelectedPlayer.ID);
         }
         
         public void SelectBottom()
         {
             SelectedPlayer = players[1];
+            EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnCharacterSelectionUpdated, SelectedPlayer.ID);
         }
 
         public void ConfirmSelection()
         {
-            EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnCharacterSelected, SelectedPlayer);
+            EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnCharacterSelected, SelectedPlayer.ID);
         }
 
         #endregion

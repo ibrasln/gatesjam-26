@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3b4540a238c4a4ca10ab62f5e544bf, type: 3}
   m_Name: AnalogGlitchVolume
   m_EditorClassIdentifier: URPGlitch::URPGlitch.AnalogGlitchVolume
-  active: 1
+  active: 0
   scanLineJitter:
     m_OverrideState: 1
     m_Value: 0.429
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d536c364ebc24dd6b769ef6affde936a, type: 3}
   m_Name: DigitalGlitchVolume
   m_EditorClassIdentifier: URPGlitch::URPGlitch.DigitalGlitchVolume
-  active: 1
+  active: 0
   intensity:
     m_OverrideState: 1
     m_Value: 0.151

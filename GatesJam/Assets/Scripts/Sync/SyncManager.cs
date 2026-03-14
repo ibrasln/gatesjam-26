@@ -35,22 +35,21 @@ namespace GatesJam.Sync
 
         private void SubscribeToEvents()
         {
-            EventManagerProvider.Gameplay.AddListener<Player.Player>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
+            EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
         }
 
         private void UnsubscribeFromEvents()
         {
-            EventManagerProvider.Gameplay.RemoveListener<Player.Player>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
+            EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
         }
 
         #endregion
 
         #region Event Handling
 
-        private void HandleOnCharacterSelected(Player.Player player)
+        private void HandleOnCharacterSelected(int id)
         {
-            Debug.Log("Character Selected: " + player.name);
-            EndDesync(player.ID);
+            EndDesync(id);
         }
 
         #endregion

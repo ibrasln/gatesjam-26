@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 using IboshEngine.Runtime.Core.EventManagement;
 using DG.Tweening;
 using IboshEngine.Runtime.Utilities.Debugger;
+using GatesJam.CameraManagement;
 
 namespace IboshEngine.Runtime.Core.CameraManagement
 {
@@ -16,10 +17,29 @@ namespace IboshEngine.Runtime.Core.CameraManagement
     {
         [BoxGroup("Virtual Cameras")]
         [SerializeField]
-        private CinemachineCamera sampleCamera;
+        private CinemachineCamera topCamera;
+
+        [BoxGroup("Virtual Cameras")]
+        [SerializeField]
+        private CinemachineCamera topZoomedInCamera;
+
+        [BoxGroup("Virtual Cameras")]
+        [SerializeField]
+        private CinemachineCamera bottomCamera;
+
+        [BoxGroup("Virtual Cameras")]
+        [SerializeField]
+        private CinemachineCamera bottomZoomedInCamera;
+
+        [BoxGroup("Camera Controllers")]
+        [SerializeField]
+        private CameraController topCameraController;
+
+        [BoxGroup("Camera Controllers")]
+        [SerializeField]
+        private CameraController bottomCameraController;
 
         private CinemachineCamera _currentCamera;
-        private CinemachineBrain _cinemachineBrain;
         private float _movementDelay;
 
         #region Built-In
@@ -27,8 +47,7 @@ namespace IboshEngine.Runtime.Core.CameraManagement
         protected override void Awake()
         {
             base.Awake();
-            _cinemachineBrain = GetComponent<CinemachineBrain>();
-            _movementDelay = _cinemachineBrain.DefaultBlend.BlendTime;
+            _movementDelay = topCameraController.GetComponent<CinemachineBrain>().DefaultBlend.BlendTime;
         }
 
         private void OnEnable()
@@ -47,23 +66,76 @@ namespace IboshEngine.Runtime.Core.CameraManagement
 
         private void SubscribeToEvents()
         {
-
+            EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnCharacterSelectionUpdated, HandleOnCharacterSelectionUpdated);
+            EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
         }
 
         private void UnsubscribeFromEvents()
         {
+            EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnCharacterSelectionUpdated, HandleOnCharacterSelectionUpdated);
+            EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
+        }
 
+        #endregion
+
+        #region Event Handling
+
+        private void HandleOnCharacterSelectionUpdated(int id)
+        {
+            if (id == topCameraController.CameraID) 
+            {
+                MoveToTopZoomedIn();
+                MoveToBottom();
+            }
+            else if (id == bottomCameraController.CameraID) 
+            {
+                MoveToBottomZoomedIn();
+                MoveToTop();
+            }
+        }
+
+        private void HandleOnCharacterSelected(int id)
+        {
+            if (id == topCameraController.CameraID)
+            {
+                MoveToTop();
+            }
+            else if (id == bottomCameraController.CameraID)
+            {
+                MoveToBottom();
+            }
         }
 
         #endregion
 
         #region Movement
 
-        public async void MoveToNone()
+        public async void MoveToTop()
         {
-            EventManagerProvider.Camera.Broadcast(CameraEvent.OnNoneCameraStarted);
-            await SwitchToCamAsync(sampleCamera);
-            EventManagerProvider.Camera.Broadcast(CameraEvent.OnNoneCameraCompleted);
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnTopCameraStarted);
+            await SwitchToCamAsync(topCamera);
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnTopCameraCompleted);
+        }
+
+        public async void MoveToBottom()
+        {
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnBottomCameraStarted);
+            await SwitchToCamAsync(bottomCamera);
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnBottomCameraCompleted);
+        }
+
+        public async void MoveToTopZoomedIn()
+        {
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnTopZoomedInCameraStarted);
+            await SwitchToCamAsync(topZoomedInCamera);
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnTopZoomedInCameraCompleted);
+        }
+
+        public async void MoveToBottomZoomedIn()
+        {
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnBottomZoomedInCameraStarted);
+            await SwitchToCamAsync(bottomZoomedInCamera);
+            EventManagerProvider.Camera.Broadcast(CameraEvent.OnBottomZoomedInCameraCompleted);
         }
 
         #endregion
@@ -78,15 +150,30 @@ namespace IboshEngine.Runtime.Core.CameraManagement
 
         private void SetPriority(CinemachineCamera targetCam)
         {
-            ResetPriorities();
+            if (targetCam == topCamera || targetCam == topZoomedInCamera)
+            {
+                ResetTopPriorities();
+            }
+            else if (targetCam == bottomCamera || targetCam == bottomZoomedInCamera)
+            {
+                ResetBottomPriorities();
+            }
+
             targetCam.Priority = 10;
             _currentCamera = targetCam;
             IboshDebugger.LogMessage($"Switched to {targetCam.name}", "Camera", IboshDebugger.DebugColor.Gray, IboshDebugger.DebugColor.Magenta);
         }
 
-        private void ResetPriorities()
+        private void ResetTopPriorities()
         {
-            sampleCamera.Priority = 0;
+            topCamera.Priority = 0;
+            topZoomedInCamera.Priority = 0;
+        }
+
+        private void ResetBottomPriorities()
+        {
+            bottomCamera.Priority = 0;
+            bottomZoomedInCamera.Priority = 0;
         }
 
         #endregion
@@ -94,11 +181,28 @@ namespace IboshEngine.Runtime.Core.CameraManagement
         #region Inspector Buttons
 
         [Button(ButtonSizes.Medium)]
-        public void ToSample()
+        public void ToTop()
         {
-            SetPriority(sampleCamera);
+            SetPriority(topCamera);
         }
 
+        [Button(ButtonSizes.Medium)]
+        public void ToTopZoomedIn()
+        {
+            SetPriority(topZoomedInCamera);
+        }
+
+        [Button(ButtonSizes.Medium)]
+        public void ToBottom()
+        {
+            SetPriority(bottomCamera);
+        }
+
+        [Button(ButtonSizes.Medium)]
+        public void ToBottomZoomedIn()
+        {
+            SetPriority(bottomZoomedInCamera);
+        }
         #endregion
 
         #region Camera Shake

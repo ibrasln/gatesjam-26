@@ -48,14 +48,18 @@ namespace GatesJam.CameraManagement
         private void SubscribeToEvents()
         {
             EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnSyncStarted, HandleOnSyncStarted);
+            EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
+            EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnCharacterSelectionUpdated, HandleOnCharacterSelectionUpdated);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
         }
 
         private void UnsubscribeFromEvents()
         {
             EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnSyncStarted, HandleOnSyncStarted);
+            EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
+            EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnCharacterSelectionUpdated, HandleOnCharacterSelectionUpdated);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
         }
 
@@ -68,30 +72,44 @@ namespace GatesJam.CameraManagement
             DisableGlitch();
         }
 
+        private void HandleOnDesyncStarted()
+        {
+            EnableGlitch();
+        }
+
         private void HandleOnDesyncEnded(int id)
         {
-            if (id == CameraID) DisableGlitch();
-            else EnableGlitch();
+            UpdateGlitchByID(id);
+        }
+
+        private void HandleOnCharacterSelectionUpdated(int id)
+        {
+            UpdateGlitchByID(id);
         }
 
         private void HandleOnPlayerChanged(int id)
         {
-            if (id == CameraID) DisableGlitch();
-            else EnableGlitch();
+            UpdateGlitchByID(id);
         }
 
         #endregion
 
         #region Glitch Management
 
-        public void EnableGlitch()
+        private void UpdateGlitchByID(int id)
+        {
+            if (id == CameraID) DisableGlitch();
+            else EnableGlitch();
+        }
+
+        private void EnableGlitch()
         {
             _isGlitching = true;
             _analogGlitchVolume.active = true;
             _digitalGlitchVolume.active = true;
         }
 
-        public void DisableGlitch()
+        private void DisableGlitch()
         {
             _isGlitching = false;
             _analogGlitchVolume.active = false;

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec510fabc358bee42aa35a7dcd7651f8, type: 3}
+  m_Name: Audio_Glitch
+  m_EditorClassIdentifier: Assembly-CSharp::IboshEngine.Runtime.Core.AudioManagement.AudioSO
+  Name: Glitch
+  Type: 1
+  Clip: {fileID: 8300000, guid: 129a9638747521a4fb3eba37aa5f091e, type: 3}
+  HasRandomPitch: 1

@@ -22,6 +22,15 @@ namespace IboshEngine.Runtime.Core.EventManagement
     {
         OnNoneCameraStarted,
         OnNoneCameraCompleted,
+
+        OnTopCameraStarted,
+        OnTopCameraCompleted,
+        OnBottomCameraStarted,
+        OnBottomCameraCompleted,
+        OnTopZoomedInCameraStarted,
+        OnTopZoomedInCameraCompleted,
+        OnBottomZoomedInCameraStarted,
+        OnBottomZoomedInCameraCompleted,
     }
 
     /// <summary>
@@ -33,6 +42,7 @@ namespace IboshEngine.Runtime.Core.EventManagement
         OnSyncEnded,
         OnDesyncStarted,
         OnDesyncEnded,
+        OnCharacterSelectionUpdated,
         OnCharacterSelected,
         OnPlayerChanged,
     }
