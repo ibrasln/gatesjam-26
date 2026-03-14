@@ -1,6 +1,7 @@
 using UnityEngine;
 using IboshEngine.Runtime.Systems.StateMachine;
 using IboshEngine.Runtime.Core.EventManagement;
+using GatesJam.LevelManagement;
 
 namespace GatesJam.Player
 {
@@ -11,19 +12,19 @@ namespace GatesJam.Player
         [SerializeField] private Transform groundCheckTransform;
 
         public PlayerInputHandler InputHandler;
-        public Animator Anim {get; private set; }
-        public Rigidbody2D RB {get; private set; }
+        public Animator Anim { get; private set; }
+        public Rigidbody2D RB { get; private set; }
         public int FacingDirection { get; private set; }
 
         // State Machine
         public StateMachine<Player, PlayerData> StateMachine;
-        public PlayerIdleState IdleState {get; private set; }
-        public PlayerMoveState MoveState {get; private set; }
-        public PlayerJumpState JumpState {get; private set; }
-        public PlayerInAirState InAirState {get; private set; }
-        public PlayerSyncState SyncState {get; private set; }
-        public PlayerWaitForDesyncState WaitForDesyncState {get; private set; }
-        public PlayerUnusableState UnusableState {get; private set; }
+        public PlayerIdleState IdleState { get; private set; }
+        public PlayerMoveState MoveState { get; private set; }
+        public PlayerJumpState JumpState { get; private set; }
+        public PlayerInAirState InAirState { get; private set; }
+        public PlayerSyncState SyncState { get; private set; }
+        public PlayerWaitForDesyncState WaitForDesyncState { get; private set; }
+        public PlayerUnusableState UnusableState { get; private set; }
 
         #region Built-In
 
@@ -31,7 +32,7 @@ namespace GatesJam.Player
         {
             Anim = GetComponent<Animator>();
             RB = GetComponent<Rigidbody2D>();
-            
+
             StateMachine = new();
             IdleState = new PlayerIdleState(this, StateMachine, Data, "idle");
             MoveState = new PlayerMoveState(this, StateMachine, Data, "move");
@@ -46,13 +47,13 @@ namespace GatesJam.Player
         {
             SubscribeToEvents();
         }
-        
+
         private void OnDisable()
         {
             UnsubscribeFromEvents();
         }
 
-        private void Start() 
+        private void Start()
         {
             StateMachine.Initialize(IdleState);
         }
@@ -83,6 +84,7 @@ namespace GatesJam.Player
             EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
+            EventManagerProvider.Level.AddListener<Level>(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
         }
 
         private void UnsubscribeFromEvents()
@@ -92,6 +94,7 @@ namespace GatesJam.Player
             EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
+            EventManagerProvider.Level.RemoveListener<Level>(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
         }
 
         #endregion
@@ -112,7 +115,7 @@ namespace GatesJam.Player
         {
             StateMachine.ChangeState(UnusableState);
         }
-        
+
         private void HandleOnDesyncEnded(int playerID)
         {
             if (playerID == ID) StateMachine.ChangeState(IdleState);
@@ -125,8 +128,14 @@ namespace GatesJam.Player
             else StateMachine.ChangeState(UnusableState);
         }
 
+        private void HandleOnLevelLoaded(Level level)
+        {
+            Section section = level.GetSectionByID(ID);
+            transform.position = section.CharacterSpawnPoint.position;
+        }
+
         #endregion
-   
+
         #region Checks
 
         public bool CheckOnGround()
@@ -139,7 +148,7 @@ namespace GatesJam.Player
         public void Flip(int xInput)
         {
             if (xInput == 0 || xInput == FacingDirection) return;
-            
+
             FacingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0f);
         }

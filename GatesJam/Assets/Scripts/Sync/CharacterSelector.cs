@@ -24,7 +24,7 @@ namespace GatesJam.Sync
         {
             SubscribeToEvents();
         }
-        
+
         private void OnDisable()
         {
             UnsubscribeFromEvents();
@@ -64,7 +64,7 @@ namespace GatesJam.Sync
             SelectedPlayer = players[0];
             EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnCharacterSelectionUpdated, SelectedPlayer.ID);
         }
-        
+
         public void SelectBottom()
         {
             SelectedPlayer = players[1];
@@ -80,6 +80,7 @@ namespace GatesJam.Sync
 
         public void ChangePlayer()
         {
+            if (SyncManager.Instance.IsExecuting) return;
             SelectedPlayer = SelectedPlayer == players[0] ? players[1] : players[0];
             Debug.Log("Changed Player to: " + SelectedPlayer.name);
             EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnPlayerChanged, SelectedPlayer.ID);

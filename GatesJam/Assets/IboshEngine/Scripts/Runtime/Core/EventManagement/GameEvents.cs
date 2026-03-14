@@ -46,4 +46,16 @@ namespace IboshEngine.Runtime.Core.EventManagement
         OnCharacterSelected,
         OnPlayerChanged,
     }
+
+    /// <summary>
+    /// Enum defining different types of Level events.
+    /// </summary>
+    public enum LevelEvent
+    {
+        OnLevelLoaded,
+        OnLevelStarted,
+        OnLevelSucceeded,
+        OnLevelFailed,
+        OnLevelRestarted,
+    }
 }

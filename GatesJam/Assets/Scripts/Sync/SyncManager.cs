@@ -2,14 +2,13 @@ using Cysharp.Threading.Tasks;
 using IboshEngine.Runtime.Core.EventManagement;
 using IboshEngine.Runtime.Utilities.Singleton;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace GatesJam.Sync
 {
     public class SyncManager : IboshSingleton<SyncManager>
     {
         [ReadOnly] public bool IsSynced;
-        private bool _isExecuting;
+        [ReadOnly] public bool IsExecuting;
 
         #region Built-In
 
@@ -58,8 +57,8 @@ namespace GatesJam.Sync
 
         public async void Execute()
         {
-            if (_isExecuting) return;
-            _isExecuting = true;
+            if (IsExecuting) return;
+            IsExecuting = true;
 
             if (IsSynced)
             {
@@ -70,7 +69,7 @@ namespace GatesJam.Sync
                 await SyncAsync();
             }
 
-            _isExecuting = false;
+            IsExecuting = false;
         }
 
         public async UniTask SyncAsync()
