@@ -82,6 +82,7 @@ namespace GatesJam.Player
             EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnSyncEnded, HandleOnSyncEnded);
             EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
+            EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
         }
 
         private void UnsubscribeFromEvents()
@@ -90,6 +91,7 @@ namespace GatesJam.Player
             EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnSyncEnded, HandleOnSyncEnded);
             EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
+            EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
         }
 
         #endregion
@@ -112,6 +114,12 @@ namespace GatesJam.Player
         }
         
         private void HandleOnDesyncEnded(int playerID)
+        {
+            if (playerID == ID) StateMachine.ChangeState(IdleState);
+            else StateMachine.ChangeState(UnusableState);
+        }
+
+        private void HandleOnPlayerChanged(int playerID)
         {
             if (playerID == ID) StateMachine.ChangeState(IdleState);
             else StateMachine.ChangeState(UnusableState);

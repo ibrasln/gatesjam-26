@@ -50,7 +50,7 @@ namespace GatesJam.Player
         #endregion
 
         #region Event Handling
-        
+
         private void HandleOnDesyncEnded()
         {
             EnterPlayerActionMap();
@@ -91,6 +91,11 @@ namespace GatesJam.Player
             {
                 SyncInput = false;
             }
+        }
+
+        public void OnChangePlayer(InputAction.CallbackContext context)
+        {
+            if (context.performed) CharacterSelector.Instance.ChangePlayer();
         }
 
         #endregion

@@ -34,5 +34,6 @@ namespace IboshEngine.Runtime.Core.EventManagement
         OnDesyncStarted,
         OnDesyncEnded,
         OnCharacterSelected,
+        OnPlayerChanged,
     }
 }
