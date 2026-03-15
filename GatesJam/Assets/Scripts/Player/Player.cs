@@ -25,6 +25,12 @@ namespace GatesJam.Player
         public PlayerSyncState SyncState { get; private set; }
         public PlayerWaitForDesyncState WaitForDesyncState { get; private set; }
         public PlayerUnusableState UnusableState { get; private set; }
+        public PlayerMoveToTargetState MoveToTargetState { get; private set; }
+
+        /// <summary>
+        /// Target position for MoveToTargetState. Set before changing to MoveToTargetState.
+        /// </summary>
+        public Vector2? MoveToTarget { get; set; }
 
         private bool _isCompletedLevel;
 
@@ -43,6 +49,9 @@ namespace GatesJam.Player
             SyncState = new PlayerSyncState(this, StateMachine, Data, "sync");
             WaitForDesyncState = new PlayerWaitForDesyncState(this, StateMachine, Data, "idle");
             UnusableState = new PlayerUnusableState(this, StateMachine, Data, "idle");
+            MoveToTargetState = new PlayerMoveToTargetState(this, StateMachine, Data, "move");
+
+            StateMachine.Initialize(IdleState);
         }
 
         private void OnEnable()
@@ -53,11 +62,6 @@ namespace GatesJam.Player
         private void OnDisable()
         {
             UnsubscribeFromEvents();
-        }
-
-        private void Start()
-        {
-            StateMachine.Initialize(IdleState);
         }
 
         private void Update()
@@ -145,6 +149,7 @@ namespace GatesJam.Player
         {
             Section section = level.GetSectionByID(ID);
             transform.position = section.CharacterSpawnPoint.position;
+            MoveTo(section.CharacterStartPoint.position);
             _isCompletedLevel = false;
         }
 
@@ -165,6 +170,15 @@ namespace GatesJam.Player
 
             FacingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0f);
+        }
+
+        /// <summary>
+        /// Moves the character to the given world position. Switches to MoveToTargetState and transitions to Idle when arrived.
+        /// </summary>
+        public void MoveTo(Vector2 targetPosition)
+        {
+            MoveToTarget = targetPosition;
+            StateMachine.ChangeState(MoveToTargetState);
         }
     }
 }

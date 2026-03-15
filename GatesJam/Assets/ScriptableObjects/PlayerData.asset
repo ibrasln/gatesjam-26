@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GatesJam.Player.PlayerData
   MoveSpeed: 7
   JumpForce: 15
-  InAirMoveSpeed: 7
+  InAirMoveSpeed: 6
+  MoveToTargetSpeed: 3
+  MoveToTargetArrivalThreshold: 0.05
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 128

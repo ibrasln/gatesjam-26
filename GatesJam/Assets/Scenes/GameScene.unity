@@ -149,6 +149,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 446790664}
+  - {fileID: 570228544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &97453057
@@ -1035,6 +1036,80 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GatesJam.CameraManagement.ConfinerSetter
   id: 1
+--- !u!1001 &570228543
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 57868366}
+    m_Modifications:
+    - target: {fileID: 71300456654717938, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_Name
+      value: Level_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 71300456654717938, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642805868765616758, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8339691810457963288, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+--- !u!4 &570228544 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8328701936396562185, guid: bc57a380d889b1c47b83438dc50cb2f4, type: 3}
+  m_PrefabInstance: {fileID: 570228543}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &584477465
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,6 +2949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GatesJam.Sync.SyncManager
   IsSynced: 0
+  IsExecuting: 0
 --- !u!1 &2102950524
 GameObject:
   m_ObjectHideFlags: 0

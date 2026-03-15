@@ -25,9 +25,8 @@ namespace GatesJam.LevelManagement
             _levels = levelsParent.GetComponentsInChildren<Level>(true);
         }
 
-        private async void Start()
+        private void Start()
         {
-            await UniTask.Delay(2000);
             LoadLevel();
         }
 
@@ -96,8 +95,9 @@ namespace GatesJam.LevelManagement
             Debug.Log("Level Succeeded");
             IncrementLevelIndex();
 
+            await UniTask.Delay(500);
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelSucceeded);
-            await UniTask.Delay(2500);
+            await UniTask.Delay(500);
             LoadLevel();
             await UniTask.Delay(500);
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelStarted);
