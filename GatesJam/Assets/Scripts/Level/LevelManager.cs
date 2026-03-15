@@ -105,6 +105,7 @@ namespace GatesJam.LevelManagement
 
         public async void RestartLevel()
         {
+            Debug.Log("Level Restarted");
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelRestarted);
             await UniTask.Delay(500);
             LoadLevel();

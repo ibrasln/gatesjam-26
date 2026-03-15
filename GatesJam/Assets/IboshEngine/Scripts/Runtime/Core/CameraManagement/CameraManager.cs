@@ -68,12 +68,14 @@ namespace IboshEngine.Runtime.Core.CameraManagement
         {
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnCharacterSelectionUpdated, HandleOnCharacterSelectionUpdated);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
+            EventManagerProvider.Level.AddListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
         }
 
         private void UnsubscribeFromEvents()
         {
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnCharacterSelectionUpdated, HandleOnCharacterSelectionUpdated);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
+            EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
         }
 
         #endregion
@@ -82,12 +84,12 @@ namespace IboshEngine.Runtime.Core.CameraManagement
 
         private void HandleOnCharacterSelectionUpdated(int id)
         {
-            if (id == topCameraController.CameraID) 
+            if (id == topCameraController.CameraID)
             {
                 MoveToTopZoomedIn();
                 MoveToBottom();
             }
-            else if (id == bottomCameraController.CameraID) 
+            else if (id == bottomCameraController.CameraID)
             {
                 MoveToBottomZoomedIn();
                 MoveToTop();
@@ -104,6 +106,12 @@ namespace IboshEngine.Runtime.Core.CameraManagement
             {
                 MoveToBottom();
             }
+        }
+
+        private void HandleOnLevelRestarted()
+        {
+            MoveToTop();
+            MoveToBottom();
         }
 
         #endregion

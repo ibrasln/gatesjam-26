@@ -22,6 +22,9 @@ namespace GatesJam.UI
             EventManagerProvider.Level.AddListener(LevelEvent.OnLevelSucceeded, HandleOnLevelSucceeded);
             EventManagerProvider.Level.AddListener(LevelEvent.OnLevelFailed, HandleOnLevelFailed);
             EventManagerProvider.Level.AddListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
+
+            EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
+            EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
         }
 
         protected override void UnsubscribeFromEvents()
@@ -34,6 +37,9 @@ namespace GatesJam.UI
             EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelSucceeded, HandleOnLevelSucceeded);
             EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelFailed, HandleOnLevelFailed);
             EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
+
+            EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnDesyncStarted, HandleOnDesyncStarted);
+            EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
         }
 
         #endregion
@@ -58,6 +64,16 @@ namespace GatesJam.UI
         private void HandleOnLevelRestarted()
         {
             Hide();
+        }
+
+        private void HandleOnDesyncStarted()
+        {
+            ShowBlockingOverlay();
+        }
+
+        private void HandleOnDesyncEnded()
+        {
+            HideBlockingOverlay();
         }
 
         #endregion

@@ -13,7 +13,7 @@ namespace GatesJam.CameraManagement
 
         private AnalogGlitchVolume _analogGlitchVolume;
         private DigitalGlitchVolume _digitalGlitchVolume;
-    
+
         private Camera _camera;
         private bool _isGlitching;
 

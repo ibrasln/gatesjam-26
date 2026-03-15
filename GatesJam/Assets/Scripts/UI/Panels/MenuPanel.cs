@@ -26,6 +26,8 @@ namespace GatesJam.UI
             gameplayButton.onClick.AddListener(OnGameplayButtonClicked);
             settingsButton.onClick.AddListener(OnSettingsButtonClicked);
             quitButton.onClick.AddListener(OnQuitButtonClicked);
+
+
         }
 
         protected override void UnsubscribeFromEvents()
