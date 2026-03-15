@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 2159657726958943418}
   m_Layer: 0
   m_Name: Trigger_Start
-  m_TagString: Untagged
+  m_TagString: Trigger_Start
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 7829921250585668352}
   m_Layer: 0
   m_Name: Trigger_Start
-  m_TagString: Untagged
+  m_TagString: Trigger_Start
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8674,7 +8674,7 @@ GameObject:
   - component: {fileID: 1627720526113495172}
   m_Layer: 0
   m_Name: Trigger_End
-  m_TagString: Untagged
+  m_TagString: Trigger_End
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9010,7 +9010,7 @@ GameObject:
   - component: {fileID: 1555813982921258560}
   m_Layer: 0
   m_Name: Trigger_End
-  m_TagString: Untagged
+  m_TagString: Trigger_End
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

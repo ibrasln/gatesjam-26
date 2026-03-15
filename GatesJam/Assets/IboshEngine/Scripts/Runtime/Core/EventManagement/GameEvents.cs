@@ -45,6 +45,7 @@ namespace IboshEngine.Runtime.Core.EventManagement
         OnCharacterSelectionUpdated,
         OnCharacterSelected,
         OnPlayerChanged,
+        OnPlayerCompletedLevel,
     }
 
     /// <summary>

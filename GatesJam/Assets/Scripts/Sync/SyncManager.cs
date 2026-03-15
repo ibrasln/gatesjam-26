@@ -35,11 +35,13 @@ namespace GatesJam.Sync
         private void SubscribeToEvents()
         {
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
+            EventManagerProvider.Gameplay.AddListener(GameplayEvent.OnPlayerCompletedLevel, HandleOnPlayerCompletedLevel);
         }
 
         private void UnsubscribeFromEvents()
         {
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnCharacterSelected, HandleOnCharacterSelected);
+            EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnPlayerCompletedLevel, HandleOnPlayerCompletedLevel);
         }
 
         #endregion
@@ -49,6 +51,11 @@ namespace GatesJam.Sync
         private void HandleOnCharacterSelected(int id)
         {
             EndDesync(id);
+        }
+
+        private async void HandleOnPlayerCompletedLevel()
+        {
+            await SyncAsync();
         }
 
         #endregion

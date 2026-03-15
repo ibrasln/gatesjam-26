@@ -26,6 +26,8 @@ namespace GatesJam.Player
         public PlayerWaitForDesyncState WaitForDesyncState { get; private set; }
         public PlayerUnusableState UnusableState { get; private set; }
 
+        private bool _isCompletedLevel;
+
         #region Built-In
 
         private void Awake()
@@ -68,6 +70,16 @@ namespace GatesJam.Player
             StateMachine.CurrentState.PhysicsUpdate();
         }
 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Trigger_End"))
+            {
+                EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnPlayerCompletedLevel, ID);
+                StateMachine.ChangeState(UnusableState);
+                _isCompletedLevel = true;
+            }
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(groundCheckTransform.position, Data.GroundCheckRadius);
@@ -108,6 +120,7 @@ namespace GatesJam.Player
 
         private void HandleOnSyncEnded()
         {
+            if (_isCompletedLevel) return;
             StateMachine.ChangeState(IdleState);
         }
 
@@ -132,6 +145,7 @@ namespace GatesJam.Player
         {
             Section section = level.GetSectionByID(ID);
             transform.position = section.CharacterSpawnPoint.position;
+            _isCompletedLevel = false;
         }
 
         #endregion
