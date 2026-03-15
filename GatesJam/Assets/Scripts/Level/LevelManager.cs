@@ -25,11 +25,6 @@ namespace GatesJam.LevelManagement
             _levels = levelsParent.GetComponentsInChildren<Level>(true);
         }
 
-        private void Start()
-        {
-            LoadLevel();
-        }
-
         private void OnEnable()
         {
             SubscribeToEvents();
@@ -46,17 +41,25 @@ namespace GatesJam.LevelManagement
 
         private void SubscribeToEvents()
         {
+            EventManagerProvider.UI.AddListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnPlayerCompletedLevel, HandleOnPlayerCompletedLevel);
         }
 
         private void UnsubscribeFromEvents()
         {
+            EventManagerProvider.UI.RemoveListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnPlayerCompletedLevel, HandleOnPlayerCompletedLevel);
         }
 
         #endregion
 
         #region Event Handling
+
+        private async void HandleOnPlayButtonClicked()
+        {
+            await UniTask.Delay(500);
+            LoadLevel();
+        }
 
         private void HandleOnPlayerCompletedLevel(int playerID)
         {
@@ -77,7 +80,7 @@ namespace GatesJam.LevelManagement
             _succeededCharacterAmount = 0;
         }
 
-        public void LoadLevel()
+        public async void LoadLevel()
         {
             ResetLevel();
 
@@ -88,6 +91,9 @@ namespace GatesJam.LevelManagement
             CurrentLevel.Initialize();
 
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelLoaded, CurrentLevel);
+
+            await UniTask.Delay(500);
+            EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelStarted);
         }
 
         public async void OnLevelSucceeded()
@@ -99,8 +105,6 @@ namespace GatesJam.LevelManagement
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelSucceeded);
             await UniTask.Delay(500);
             LoadLevel();
-            await UniTask.Delay(500);
-            EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelStarted);
         }
 
         #endregion

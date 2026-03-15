@@ -10,6 +10,7 @@ namespace GatesJam.UI
         protected override void SubscribeToEvents()
         {
             base.SubscribeToEvents();
+            EventManagerProvider.UI.AddListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Level.AddListener(LevelEvent.OnLevelSucceeded, HandleOnLevelSucceeded);
             EventManagerProvider.Level.AddListener(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
         }
@@ -17,6 +18,7 @@ namespace GatesJam.UI
         protected override void UnsubscribeFromEvents()
         {
             base.UnsubscribeFromEvents();
+            EventManagerProvider.UI.RemoveListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelSucceeded, HandleOnLevelSucceeded);
             EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
         }
@@ -24,6 +26,12 @@ namespace GatesJam.UI
         #endregion
 
         #region Event Handling
+
+        private void HandleOnPlayButtonClicked()
+        {
+            Show();
+            ShowBlockingOverlay();
+        }
 
         private void HandleOnLevelSucceeded()
         {
