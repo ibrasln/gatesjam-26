@@ -121,6 +121,11 @@ namespace GatesJam.LevelManagement
             await UniTask.Delay(500);
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelSucceeded);
             await UniTask.Delay(500);
+            if (_currentLevelIndex >= _levels.Length)
+            {
+                EventManagerProvider.Level.Broadcast(LevelEvent.OnGameCompleted);
+                return;
+            }
             LoadLevel();
         }
 

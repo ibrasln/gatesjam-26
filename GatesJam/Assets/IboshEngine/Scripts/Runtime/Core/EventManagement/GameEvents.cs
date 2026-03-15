@@ -26,7 +26,6 @@ namespace IboshEngine.Runtime.Core.EventManagement
     {
         OnNoneCameraStarted,
         OnNoneCameraCompleted,
-
         OnTopCameraStarted,
         OnTopCameraCompleted,
         OnBottomCameraStarted,
@@ -62,5 +61,6 @@ namespace IboshEngine.Runtime.Core.EventManagement
         OnLevelSucceeded,
         OnLevelFailed,
         OnLevelRestarted,
+        OnGameCompleted,
     }
 }

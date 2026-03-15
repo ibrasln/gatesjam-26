@@ -38,6 +38,7 @@ namespace GatesJam.Player
 
         private void Awake()
         {
+            FacingDirection = 1;
             Anim = GetComponent<Animator>();
             RB = GetComponent<Rigidbody2D>();
 

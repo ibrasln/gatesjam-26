@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace GatesJam.LevelManagement.Environment
@@ -11,6 +12,7 @@ namespace GatesJam.LevelManagement.Environment
             if (other.CompareTag("Player"))
             {
                 Platform.IsButtonPressed = true;
+                transform.DOMoveY(transform.position.y - .3f, .2f);
             }
         }
 
@@ -19,6 +21,7 @@ namespace GatesJam.LevelManagement.Environment
             if (other.CompareTag("Player"))
             {
                 Platform.IsButtonPressed = false;
+                transform.DOMoveY(transform.position.y + .3f, 0.2f);
             }
         }
     }

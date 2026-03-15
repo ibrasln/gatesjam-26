@@ -27,7 +27,7 @@ namespace GatesJam.UI
             settingsButton.onClick.AddListener(OnSettingsButtonClicked);
             quitButton.onClick.AddListener(OnQuitButtonClicked);
 
-
+            EventManagerProvider.Level.AddListener(LevelEvent.OnGameCompleted, HandleOnGameCompleted);
         }
 
         protected override void UnsubscribeFromEvents()
@@ -37,6 +37,17 @@ namespace GatesJam.UI
             gameplayButton.onClick.RemoveListener(OnGameplayButtonClicked);
             settingsButton.onClick.RemoveListener(OnSettingsButtonClicked);
             quitButton.onClick.RemoveListener(OnQuitButtonClicked);
+
+            EventManagerProvider.Level.RemoveListener(LevelEvent.OnGameCompleted, HandleOnGameCompleted);
+        }
+
+        #endregion
+
+        #region Event Handling
+
+        private void HandleOnGameCompleted()
+        {
+            Show();
         }
 
         #endregion
