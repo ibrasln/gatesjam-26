@@ -67,6 +67,7 @@ namespace GatesJam.Player
         private void Update()
         {
             StateMachine.CurrentState.LogicUpdate();
+            Anim.SetFloat("yVelocity", RB.linearVelocity.y);
         }
 
         private void FixedUpdate()
@@ -81,6 +82,10 @@ namespace GatesJam.Player
                 EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnPlayerCompletedLevel, ID);
                 StateMachine.ChangeState(UnusableState);
                 _isCompletedLevel = true;
+            }
+            else if (other.CompareTag("Hazard"))
+            {
+                LevelManager.Instance.OnLevelFailed();
             }
         }
 

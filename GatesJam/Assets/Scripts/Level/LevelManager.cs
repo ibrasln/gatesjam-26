@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using GatesJam.Player;
 using IboshEngine.Runtime.Core.EventManagement;
 using IboshEngine.Runtime.Utilities.Singleton;
 using Sirenix.OdinInspector;
@@ -85,6 +86,7 @@ namespace GatesJam.LevelManagement
         private void ResetLevel()
         {
             _succeededCharacterAmount = 0;
+            PlayerInputHandler.Instance.EnterPlayerActionMap();
         }
 
         public async void LoadLevel()
