@@ -43,12 +43,14 @@ namespace GatesJam.LevelManagement
         {
             EventManagerProvider.UI.AddListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnPlayerCompletedLevel, HandleOnPlayerCompletedLevel);
+            EventManagerProvider.UI.AddListener(UIEvent.OnRestartButtonClicked, HandleOnRestartButtonClicked);
         }
 
         private void UnsubscribeFromEvents()
         {
             EventManagerProvider.UI.RemoveListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnPlayerCompletedLevel, HandleOnPlayerCompletedLevel);
+            EventManagerProvider.UI.RemoveListener(UIEvent.OnRestartButtonClicked, HandleOnRestartButtonClicked);
         }
 
         #endregion
@@ -69,6 +71,11 @@ namespace GatesJam.LevelManagement
             {
                 OnLevelSucceeded();
             }
+        }
+
+        private void HandleOnRestartButtonClicked()
+        {
+            RestartLevel();
         }
 
         #endregion
@@ -96,6 +103,13 @@ namespace GatesJam.LevelManagement
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelStarted);
         }
 
+        public async void RestartLevel()
+        {
+            EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelRestarted);
+            await UniTask.Delay(500);
+            LoadLevel();
+        }
+
         public async void OnLevelSucceeded()
         {
             Debug.Log("Level Succeeded");
@@ -105,6 +119,12 @@ namespace GatesJam.LevelManagement
             EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelSucceeded);
             await UniTask.Delay(500);
             LoadLevel();
+        }
+
+        public void OnLevelFailed()
+        {
+            Debug.Log("Level Failed");
+            EventManagerProvider.Level.Broadcast(LevelEvent.OnLevelFailed);
         }
 
         #endregion

@@ -12,6 +12,7 @@ namespace GatesJam.UI
             base.SubscribeToEvents();
             EventManagerProvider.UI.AddListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Level.AddListener(LevelEvent.OnLevelSucceeded, HandleOnLevelSucceeded);
+            EventManagerProvider.Level.AddListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
             EventManagerProvider.Level.AddListener(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
         }
 
@@ -20,6 +21,7 @@ namespace GatesJam.UI
             base.UnsubscribeFromEvents();
             EventManagerProvider.UI.RemoveListener(UIEvent.OnPlayButtonClicked, HandleOnPlayButtonClicked);
             EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelSucceeded, HandleOnLevelSucceeded);
+            EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
             EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
         }
 
@@ -34,6 +36,12 @@ namespace GatesJam.UI
         }
 
         private void HandleOnLevelSucceeded()
+        {
+            Show();
+            ShowBlockingOverlay();
+        }
+
+        private void HandleOnLevelRestarted()
         {
             Show();
             ShowBlockingOverlay();

@@ -9,6 +9,7 @@ namespace IboshEngine.Runtime.Core.EventManagement
         OnPlayButtonClicked,
         OnGameplayButtonClicked,
         OnQuitButtonClicked,
+        OnRestartButtonClicked,
     }
 
     /// <summary>

@@ -101,6 +101,8 @@ namespace GatesJam.Player
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
             EventManagerProvider.Gameplay.AddListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
             EventManagerProvider.Level.AddListener<Level>(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
+            EventManagerProvider.Level.AddListener(LevelEvent.OnLevelFailed, HandleOnLevelFailed);
+            EventManagerProvider.Level.AddListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
         }
 
         private void UnsubscribeFromEvents()
@@ -111,6 +113,8 @@ namespace GatesJam.Player
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
             EventManagerProvider.Gameplay.RemoveListener<int>(GameplayEvent.OnPlayerChanged, HandleOnPlayerChanged);
             EventManagerProvider.Level.RemoveListener<Level>(LevelEvent.OnLevelLoaded, HandleOnLevelLoaded);
+            EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelFailed, HandleOnLevelFailed);
+            EventManagerProvider.Level.RemoveListener(LevelEvent.OnLevelRestarted, HandleOnLevelRestarted);
         }
 
         #endregion
@@ -151,6 +155,16 @@ namespace GatesJam.Player
             transform.position = section.CharacterSpawnPoint.position;
             MoveTo(section.CharacterStartPoint.position);
             _isCompletedLevel = false;
+        }
+
+        private void HandleOnLevelFailed()
+        {
+            StateMachine.ChangeState(UnusableState);
+        }
+
+        private void HandleOnLevelRestarted()
+        {
+            StateMachine.ChangeState(UnusableState);
         }
 
         #endregion
