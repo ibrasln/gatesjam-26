@@ -46,7 +46,7 @@ namespace GatesJam.Player
         {
             EventManagerProvider.Gameplay.RemoveListener(GameplayEvent.OnDesyncEnded, HandleOnDesyncEnded);
         }
-        
+
         #endregion
 
         #region Event Handling
@@ -121,27 +121,24 @@ namespace GatesJam.Player
 
         #region Action Map Management
 
-        public void EnableActionMap(string actionMapName, bool hasCursor)
+        public void EnableActionMap(string actionMapName)
         {
             _playerInput.SwitchCurrentActionMap(actionMapName);
-
-            Cursor.lockState = hasCursor ? CursorLockMode.None : CursorLockMode.Locked;
-            Cursor.visible = hasCursor;
         }
 
         public void EnterPlayerActionMap()
         {
-            EnableActionMap("Player", false);
+            EnableActionMap("Player");
         }
 
         public void EnterUIActionMap()
         {
-            EnableActionMap("UI", true);
+            EnableActionMap("UI");
         }
 
         public void EnterCharacterSelectionActionMap()
         {
-            EnableActionMap("CharacterSelection", false);
+            EnableActionMap("CharacterSelection");
         }
 
         #endregion
