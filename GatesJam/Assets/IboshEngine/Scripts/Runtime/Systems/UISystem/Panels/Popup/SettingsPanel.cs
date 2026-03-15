@@ -26,9 +26,9 @@ namespace IboshEngine.Runtime.Systems.UISystem.Panels.Popup
         {
             base.Awake();
 
-            _musicImage = musicButton.GetComponentInChildren<Image>();
-            _sfxImage = sfxButton.GetComponentInChildren<Image>();
-            _hapticImage = hapticButton.GetComponentInChildren<Image>();
+            _musicImage = musicButton.transform.GetChild(0).GetComponent<Image>();
+            _sfxImage = sfxButton.transform.GetChild(0).GetComponent<Image>();
+            _hapticImage = hapticButton.transform.GetChild(0).GetComponent<Image>();
 
             // Load saved preferences
             UpdateButtonSprite("Music", _musicImage, musicOnSprite, musicOffSprite);

@@ -60,6 +60,7 @@ namespace GatesJam.UI
         public void OnQuitButtonClicked()
         {
             EventManagerProvider.UI.Broadcast(UIEvent.OnQuitButtonClicked);
+            Application.Quit();
         }
 
         #endregion

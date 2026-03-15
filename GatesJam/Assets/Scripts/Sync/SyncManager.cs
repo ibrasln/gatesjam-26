@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using IboshEngine.Runtime.Core.AudioManagement;
 using IboshEngine.Runtime.Core.EventManagement;
 using IboshEngine.Runtime.Utilities.Singleton;
 using Sirenix.OdinInspector;
@@ -90,6 +91,7 @@ namespace GatesJam.Sync
         public void StartDesync()
         {
             IsSynced = false;
+            AudioManager.Instance.PlaySound("Glitch");
             EventManagerProvider.Gameplay.Broadcast(GameplayEvent.OnDesyncStarted);
         }
 
